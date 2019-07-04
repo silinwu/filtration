@@ -1,5 +1,5 @@
 # filtration
-These documents with .cpp and .py are used for simulate the filtration process.
+These documents with .cpp and .py are used for simulating the filtration process.
 testparticlefiltration.cpp could be used for the normal slurry with small particles.
 testflocfiltration.cpp could be used for slurry after flocculation with big floc.
 filter.cpp can be used for test the initial filter.
