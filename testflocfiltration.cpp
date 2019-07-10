@@ -180,23 +180,35 @@ int main (int argc, char **argv) try
     double rhos = 2.7;
     double Ga = 10.0;                           // Immersed boundary lattice boltzmann simulation of turbulent channel flows in the presence of spherical particles. Numerical Simulation of Two Spheres with Different Density Settling In Fluids through Lattice Boltzmann Method, 文章中定义了伽利略数的计算公式
  // the filter   
-    double ratio = 2.5;
+    double ratio = 2;
     double RR = ratio*R;                        //filter particle radius in the slurry
-    int    Pnx = 3;                             //filter particle numbers in one row
-    int    Pny = 1;                             //the column numbers of filter particles
-    double pdx = 75;                            //gap between filter particle surface in x axis
-    double pdy = 35;                           
+    int    Pnx = 8;                             //filter particle numbers in one row
+    int    Pny = 3;                             //the column numbers of filter particles
+    double pdx = 38.4;                            //gap between filter particle surface in x axis
+    double pdy = 38.4;                           
  // the floc   
-    int    fnx = 3;                             //floc number
-    int    fny = 2;
-    double lll = 135;                           //the gap between particle in the middle of the floc surfaces
-    int    nfloc = 2;                           //the number of the surface outside the particle in the middle of the floc
-    double RRR = 2*R*nfloc+R;                   //the radius of the floc
-    int    shape = 6;                            //shape =3 triangle; shape = 4 square; shape =6 hexagon
+    int    fnx = 6;                             //floc number
+    int    fny = 6;
+    double lll = 105;                           //the gap between particle in the middle of the floc surfaces
+    double nfloc = 1;                           //the number of the surface outside the particle in the middle of the floc
+    double RRR = 0.0;                           //initialize the radius of the floc
+    int    shape = 6;                           //shape =3 triangle; shape = 4 square; shape =6 hexagon
+    if(shape==3)
+    {
+        RRR = (((nfloc*2)/3)*std::sqrt(3)+1)*R;
+    }
+    if(shape==4)
+    {
+        RRR = (nfloc*std::sqrt(2)+1)*R;
+    }
+    if(shape==6)
+    {
+        RRR = (nfloc*2+1)*R;
+    }
  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
  // the flow field
-    size_t nx = std::max(std::ceil(Pnx*(RR*2+pdx)), std::ceil(fnx*(R*2+lll)));
-	size_t ny = std::ceil((Pny-1)*(std::sqrt(3)*RR+pdy) + 40.0+2*RR + fny*(2*R+lll))+1;
+    size_t nx = std::max(std::ceil(Pnx*(RR*2+pdx)), std::ceil(fnx*lll));
+	size_t ny = std::ceil((Pny-1)*(std::sqrt(3)*RR+pdy) + 40.0+2*RR + fny*lll)+1;
     size_t nz = 1;
     double rho = 1.0; 
     double dx = 1.0;
@@ -216,9 +228,21 @@ int main (int argc, char **argv) try
     std::cout<<"AOS/D   = "<<(pdx/(R*2))<<std::endl;
     std::cout<<"nx1 = "<<std::ceil(Pnx*(RR*2+pdx))<<std::endl;
     std::cout<<"nx2 = "<<std::ceil(pnx*(R*2+l))<<std::endl;
-    std::cout<<"nx3 = "<<std::ceil(fnx*(R*2+lll))<<std::endl;
-    std::cout<<"gap between floc surface = "<<std::ceil(lll-2*2*R*nfloc)<<std::endl;
-    std::cout<<"water content of the flocs = "<<(((lll+2*R)*(lll+2*R)-3.14*R*R*((nfloc*nfloc+1)*(nfloc*nfloc+1)))/(3.14*R*R*((nfloc*nfloc+1)*(nfloc*nfloc+1))*2.7))<<std::endl;
+    std::cout<<"nx3 = "<<std::ceil(fnx*lll)<<std::endl;
+    std::cout<<"gap between floc surface = "<<std::ceil(lll-2*RRR)<<std::endl;   ///not precise
+    if(shape == 3) 
+    {
+       
+       std::cout<<"water content of the flocs = "<<((lll*lll-3.14*R*R*((nfloc+2)*(nfloc+1)/2))/(3.14*R*R*((nfloc+2)*(nfloc+1)/2)*2.7))<<std::endl; 
+    }
+    if(shape==4)
+    {
+        std::cout<<"water content of the flocs = "<<((lll*lll-3.14*R*R*(nfloc+1)*(nfloc+1))/((3.14*R*R*(nfloc+1)*(nfloc+1))*2.7))<<std::endl; 
+    }
+    if(shape==6)
+    {
+        std::cout<<"water content of the flocs = "<<((lll*lll-3.14*R*R*(3*(1+nfloc)*nfloc+1))/(3.14*R*R*(3*(1+nfloc)*nfloc+1)*2.7))<<std::endl;
+    }
     std::cout<<"nx = "<<nx<<std::endl;
     std::cout<<"ny = "<<ny<<std::endl;
     std::cout<<"gy = "<<gy<<std::endl;
@@ -229,8 +253,8 @@ int main (int argc, char **argv) try
     my_dat.nu = nu;
     my_dat.g = gy;
     my_dat.R = R;
-    my_dat.rho1 = 1.075;
-    my_dat.rho2 = 0.925;
+    my_dat.rho1 = 1.03;
+    my_dat.rho2 = 0.97;
     my_dat.pnx = pnx;
     my_dat.pny = pny;
 	my_dat.ny = ny;
@@ -288,18 +312,20 @@ int main (int argc, char **argv) try
         if(shape == 3)
         {
             double sfy = (Pny-1)*(std::sqrt(3)*RR+pdy) + 2*RR + 0.5*lll + 40 + 1;
+            //std::cout<<"sfy  = "<<sfy<<std::endl;
             for(int j=0; j<fny; ++j)
             {
                 for(int i=0; i<fnx; ++i)
                 {
-                  Vec3_t dxr(random(-0.2*RRR,0.2*RRR),random(0*RRR,0*RRR),0.0);
+                  Vec3_t dxr(random(-0.3*RRR,0.3*RRR),random(-0.3*RRR,0.3*RRR),0.0);
                   int nnfloc = nfloc;
-                  for(int k=-nfloc; k<1; ++k)
+                  for(int k=-nfloc; k<nfloc+2; k=k+2)
                   {
                     for (int kk=0; kk<nnfloc+1; ++kk)
                     {
-                      fx = 0.5*lll + i*lll + k*2*R + kk*R;
-                      fy = sfy + j*lll + (std::sqrt(3)/3)*nfloc*R + std::sqrt(3)*R*kk;
+                      fx = 0.5*lll + i*lll + k*R + kk*R;
+                      fy = sfy + j*lll - (std::sqrt(3)/3)*nfloc*R + std::sqrt(3)*R*kk;
+                      //std::cout<<"fy  = "<<fy<<std::endl;
                       pos = fx, fy , 0;
 	                  dom.Particles.push_back(DEM::Disk(-pnum, pos+dxr, v, w, rhos, R, dom.dtdem));
                       pnum++;
@@ -312,22 +338,23 @@ int main (int argc, char **argv) try
         //// square floc
         if(shape == 4)
         {
-            double sfy = (Pny-1)*(std::sqrt(3)*RR+pdy) + 2*RR + 0.5*lll + R + 40 + 1;
+            double sfy = (Pny-1)*(std::sqrt(3)*RR+pdy) + 2*RR + 0.5*lll + 40 + 1;
             for(int j=0; j<fny; ++j)
             {
                 for(int i=0; i<fnx; ++i)
                 {
-                    Vec3_t dxr(random(-0.2*RRR,0.2*RRR),random(0*RRR,0*RRR),0.0);
-                    for(int k=-nfloc; k<(nfloc+1); ++k)
+                    Vec3_t dxr(random(-0.45*RRR,0.45*RRR),random(-0.45*RRR,0.45*RRR),0.0);
+                    for(int k=-nfloc; k<nfloc+2; k=k+2)
                     {
-		    			fx = 0.5*lll+R+i*(lll+2*R) + k*2*R;
-                        for(int z=-nfloc; z<(nfloc+1); ++z)
-                        {    
-		    				fy = sfy + j*(lll+2*R) + z*2*R;
-		    				pos = fx, fy , 0;
-		    				dom.Particles.push_back(DEM::Disk(-pnum, pos+dxr, v, w, rhos, R, dom.dtdem));
-		    				pnum++;
-		    			}
+		    			for(int kk=0; kk<nfloc+1; ++kk)
+                        {
+                            fx = 0.5*lll+i*lll + k*R;
+		    			    fy = sfy + j*lll + (-nfloc)*R+2*R*kk;
+		    			    pos = fx, fy , 0;
+		    			    dom.Particles.push_back(DEM::Disk(-pnum, pos+dxr, v, w, rhos, R, dom.dtdem));
+		    			    pnum++;
+                        }
+                        
                     }
                 }
             }
@@ -336,16 +363,16 @@ int main (int argc, char **argv) try
         if(shape == 6)
         {
             double ffy = 0;
-            double sfy = (Pny-1)*(std::sqrt(3)*RR+pdy) + 2*RR + 0.5*lll + R + 20 + 1;
+            double sfy = (Pny-1)*(std::sqrt(3)*RR+pdy) + 2*RR + 0.5*lll + 40 + 1;
             for(int j=0; j<fny; ++j)
             {
                 fy = sfy + j*lll;
                 for(int i=0; i<fnx; ++i)
                 {
-                    Vec3_t dxr(random(-0.5*R,0.5*R),random(-0.5*R,0.5*R),0.0);
+                    Vec3_t dxr(random(-0.45*RRR,0.45*RRR),random(-0.45*RRR,0.45*RRR),0.0);
                     for(int k=-nfloc; k<(nfloc+1); ++k)
                     {
-		    			fx = 0.5*lll+R+i*(lll+2*R) + k*2*R;
+		    			fx = 0.5*lll+i*lll+ k*2*R;
                         pos = fx, fy , 0;
                         dom.Particles.push_back(DEM::Disk(-pnum, pos+dxr, v, w, rhos, R, dom.dtdem));
 		    			pnum++;
@@ -357,7 +384,7 @@ int main (int argc, char **argv) try
 		    			{	
 		    				for(int z =1; z<nfloc+1; ++z)
 		    				{
-		    					fx = 0.5*lll+R+i*(lll+2*R) + k*2*R + z*R + dxr[0];
+		    					fx = 0.5*lll+i*lll + k*2*R + z*R + dxr[0];
 		    					ffy = sfy + j*lll + 2*R*z*(std::sqrt(3))/2 + dxr[1];
 		    					pos = fx, ffy , 0;
 		    					dom.Particles.push_back(DEM::Disk(-pnum, pos, v, w, rhos, R, dom.dtdem));
@@ -372,7 +399,7 @@ int main (int argc, char **argv) try
 		    			{
 		    				for(int z =1; z<nfloc+1-k; ++z)
 		    				{
-		    					fx = 0.5*lll+R+i*(lll+2*R) + k*2*R + z*R + dxr[0];
+		    					fx = 0.5*lll+i*lll + k*2*R + z*R + dxr[0];
 		    					ffy = sfy + j*lll + 2*R*z*(std::sqrt(3))/2 + dxr[1];
 		    					pos = fx, ffy , 0;
 		    					dom.Particles.push_back(DEM::Disk(-pnum, pos, v, w, rhos, R, dom.dtdem));
