@@ -13,3 +13,12 @@ Any questions can be sent to the Email address: wusilinhhu@126.com  or 107019517
 Be happy with simulation.
 
 Cheers.
+
+updata record:
+{
+2019-07-18-14:05
+Three documents have been updata:
+testfilter1.0.cpp      //this is for test the filter;
+filter1.0.py           //this is for analysis the filter;
+10.Filter渗透系数的误差测试报告 // this is some analysis for this code.
+}
