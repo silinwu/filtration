@@ -28,6 +28,14 @@ filter1.0.py                       //this is for analysis the filter;
 updata record:
 {
 Two documents have been updata:
-tesflocfiltration1.01.cpp         //updata the supplementary floc code
+testflocfiltration1.01.cpp         //updata the supplementary floc code
 filtrationtest1.0.py              //this is for analysising the test of filtration
+}
+
+2019-07-23-18:09
+updata record:
+{
+Two documents have been updata:
+testflocfiltration1.02.cpp         //updata the Gn and MU
+testparticlefiltration1.0         //updata the Gn and MU
 }
