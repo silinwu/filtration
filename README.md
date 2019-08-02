@@ -39,3 +39,13 @@ Two documents have been updata:
 testflocfiltration1.02.cpp         //updata the Gn and MU
 testparticlefiltration1.0         //updata the Gn and MU
 }
+
+2019-08-02-11:32
+updata record
+{
+the newest one for floc filtration test is testflocfiltration1.02.cpp
+the newest one for particle filtration test is testparticlefiltration1.0.cpp
+the newest one for filter test is testfilter1.0.cpp
+the newest one for particle or floc filtration test analysis is filtration1.04.py
+the newest one for filter test analysis is filter1.0.py
+}
