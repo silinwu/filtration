@@ -43,11 +43,11 @@ testparticlefiltration1.0         //updata the Gn and MU
 2019-08-02-11:32
 updata record:
 {
-the newest one for floc filtration test is testflocfiltration1.02.cpp
-the newest one for particle filtration test is testparticlefiltration1.0.cpp
-the newest one for filter test is testfilter1.0.cpp
-the newest one for particle or floc filtration test analysis is filtration1.04.py
-the newest one for filter test analysis is filter1.0.py
+the newest one for floc filtration test is testflocfiltration1.02.cpp;
+the newest one for particle filtration test is testparticlefiltration1.0.cpp;
+the newest one for filter test is testfilter1.0.cpp;
+the newest one for particle or floc filtration test analysis is filtration1.04.py;
+the newest one for filter test analysis is filter1.0.py;
 }
 
 2019-08-04-12:13
@@ -59,9 +59,10 @@ after huge testing on testflocfiltration1.02.cpp, we found there was small bug o
 2019-08-04-12:13
 updata record:
 {
-the newest one for floc filtration test is testflocfiltration1.03.cpp
-the newest one for particle filtration test is testparticlefiltration1.0.cpp
-the newest one for filter test is testfilter1.0.cpp
-the newest one for particle or floc filtration test analysis is filtration1.04.py
-the newest one for filter test analysis is filter1.0.py
+the newest one for floc filtration test is testflocfiltration1.03.cpp;
+
+the newest one for particle filtration test is testparticlefiltration1.0.cpp;
+the newest one for filter test is testfilter1.0.cpp;
+the newest one for particle or floc filtration test analysis is filtration1.04.py;
+the newest one for filter test analysis is filter1.0.py;
 }
