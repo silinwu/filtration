@@ -56,7 +56,7 @@ updata record:
 after huge testing on testflocfiltration1.02.cpp, we found there was small bug on the floc supplement, some floc will be located beyond the ny area, that lead some bug, the floc supplement will be slower or broken when entering into the nx*ny area. so we fix this bug, and update the testflocfiltration1.03.cpp 
 }
 
-2019-08-02-11:32
+2019-08-04-12:13
 updata record:
 {
 the newest one for floc filtration test is testflocfiltration1.03.cpp
