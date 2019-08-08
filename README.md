@@ -110,3 +110,21 @@ the newest one for particle or floc filtration test analysis is filtration1.04.p
 the newest one for filter test analysis is filter1.0.py;
 
 }
+
+2019-08-08-11:51
+
+updata record:
+
+{
+
+the newest one for floc filtration test is testflocfiltration1.03.cpp;
+
+the newest one for particle filtration test is testparticlefiltration1.01.cpp;
+
+the newest one for filter test is testfilter1.0.cpp;
+
+the newest one for particle or floc filtration test analysis is filtration1.04.py;
+
+the newest one for filter test analysis is filter1.0.py;
+
+}
